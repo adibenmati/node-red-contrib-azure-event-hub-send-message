@@ -3,7 +3,7 @@ module.exports = function (RED) {
         EventHubClient
     } = require("@azure/event-hubs");
 
-    function ClovityAzureContribEventHub(config) {
+    function AxonizeAzureContribEventHub(config) {
         // Create the Node-RED node
         RED.nodes.createNode(this, config);
         var node = this;
@@ -12,14 +12,15 @@ module.exports = function (RED) {
             node.log(this.name);
             node.log(this.connectionString);
             node.log(this.eventHubPath);
-            node.log(typeof msg.payload)
-            node.log(JSON.stringify(msg.payload));
+            if(typeof msg.payload != "object"){
+                throw new Error("EventHubMessage - payload object is not valid");
+            }            
             sendMessageToEventHub(node, this.connectionString, this.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
         });
     }
 
     // Registration of the node into Node-RED
-    RED.nodes.registerType("axonizeSendAzureEventHubMessages", ClovityAzureContribEventHub, {
+    RED.nodes.registerType("axonizeSendAzureEventHubMessages", AxonizeAzureContribEventHub, {
         defaults: {
             name: {
                 value: "Clovity - Send - Azure Event Hub"
