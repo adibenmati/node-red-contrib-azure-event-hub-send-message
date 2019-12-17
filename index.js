@@ -10,11 +10,11 @@ module.exports = function (RED) {
         node.on('input', function (msg) {
             var messageJSON = null;
             node.log(this.name);
-            node.log(this.credentials.connectionString);
-            node.log(this.credentials.eventHubPath);
+            node.log(this.connectionString);
+            node.log(this.eventHubPath);
             node.log(typeof msg.payload)
             node.log(JSON.stringify(msg.payload));
-            sendMessageToEventHub(node, this.credentials.connectionString, this.credentials.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
+            sendMessageToEventHub(node, this.connectionString, this.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
         });
     }
 
@@ -23,16 +23,14 @@ module.exports = function (RED) {
         defaults: {
             name: {
                 value: "Clovity - Send - Azure Event Hub"
-            }
-        },
-        credentials: {
+            },
             connectionString: {
                 type: "text"
             },
             eventHubPath: {
                 type: "text"
             }
-        }
+        }        
     });
 
     var sendMessageToEventHub = function (node, connectionString, eventHubPath, message) { 
