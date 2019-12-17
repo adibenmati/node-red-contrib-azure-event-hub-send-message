@@ -19,7 +19,7 @@ module.exports = function (RED) {
     }
 
     // Registration of the node into Node-RED
-    RED.nodes.registerType("clovitySendAzureEventHubMessages", ClovityAzureContribEventHub, {
+    RED.nodes.registerType("AxonizeSendAzureEventHubMessages", ClovityAzureContribEventHub, {
         defaults: {
             name: {
                 value: "Clovity - Send - Azure Event Hub"
