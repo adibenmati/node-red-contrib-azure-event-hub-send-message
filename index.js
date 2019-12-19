@@ -7,15 +7,19 @@ module.exports = function (RED) {
         // Create the Node-RED node
         RED.nodes.createNode(this, config);
         var node = this;
+        this.config = config;
         node.on('input', function (msg) {
             var messageJSON = null;
             node.log(this.name);
+            node.log(this.config.connectionString);
+            node.log(this.config.eventHubPath);
             node.log(this.connectionString);
             node.log(this.eventHubPath);
+
             if(typeof msg.payload != "object"){
                 throw new Error("EventHubMessage - payload object is not valid");
             }            
-            sendMessageToEventHub(node, this.connectionString, this.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
+            sendMessageToEventHub(node, this.config.connectionString, this.config.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
         });
     }
 
