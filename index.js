@@ -11,9 +11,6 @@ module.exports = function (RED) {
         node.on('input', function (msg) {
             var messageJSON = null;
             node.log(this.name);
-            node.log(this.connectionString);
-            node.log(this.eventHubPath);
-
             if(typeof msg.payload != "object"){
                 throw new Error("EventHubMessage - payload object is not valid");
             }            
@@ -29,12 +26,10 @@ module.exports = function (RED) {
                 value: "Clovity - Send - Azure Event Hub",
                 required: true
             },
-            connectionString: {                
-                value:"asdasd",
+            connectionString: {                                
                 required: true
             },
-            eventHubPath: {   
-                value:"asdasd",            
+            eventHubPath: {                   
                 required: true
             }
         }        
@@ -46,5 +41,6 @@ module.exports = function (RED) {
             body: message
         };
         client.send(eventData);
+        node.log("sent message to eventhub successfully");
     };
 }
