@@ -30,9 +30,11 @@ module.exports = function (RED) {
                 required: true
             },
             connectionString: {                
+                value:"asdasd",
                 required: true
             },
-            eventHubPath: {                
+            eventHubPath: {   
+                value:"asdasd",            
                 required: true
             }
         }        
