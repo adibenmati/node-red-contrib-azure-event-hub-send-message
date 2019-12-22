@@ -10,10 +10,10 @@ module.exports = function (RED) {
         this.config = config;
         node.on('input', function (msg) {
             var messageJSON = null;
-            node.log(this.name);
-            if(typeof msg.payload != "object"){
-                throw new Error("EventHubMessage - payload object is not valid");
-            }            
+            node.log(this.name);                        
+            if(typeof msg.payload != "object" && typeof msg.payload != "string"){
+                node.error("EventHubMessage - payload object is not valid");
+            }          
             sendMessageToEventHub(node, this.config.connectionString, this.config.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
         });
     }
@@ -36,11 +36,16 @@ module.exports = function (RED) {
     });
 
     var sendMessageToEventHub = function (node, connectionString, eventHubPath, message) { 
-        const client = EventHubClient.createFromConnectionString(connectionString, eventHubPath);
-        const eventData = {
-            body: message
-        };
-        client.send(eventData);
-        node.log("sent message to eventhub successfully");
+        try{
+            const client = EventHubClient.createFromConnectionString(connectionString, eventHubPath);
+            const eventData = {
+                body: message
+            };
+            client.send(eventData);
+            node.log("sent message to eventhub successfully");
+        }   
+        catch(e){
+            node.error("could not send event hub message" + e.message);
+        }             
     };
 }
