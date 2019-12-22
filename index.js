@@ -14,8 +14,8 @@ module.exports = function (RED) {
             if(typeof msg.payload != "object" && typeof msg.payload != "string"){
                 node.error("EventHubMessage - payload object is not valid");
             }          
-            sendMessageToEventHub(node, this.config.connectionString, this.config.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);
-            node.send({});
+            sendMessageToEventHub(node, this.config.connectionString, this.config.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);            
+            node.send(msg);
         });
     }
 
