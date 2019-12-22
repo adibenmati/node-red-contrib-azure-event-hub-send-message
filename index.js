@@ -11,8 +11,6 @@ module.exports = function (RED) {
         node.on('input', function (msg) {
             var messageJSON = null;
             node.log(this.name);
-            node.log(this.config.connectionString);
-            node.log(this.config.eventHubPath);
             node.log(this.connectionString);
             node.log(this.eventHubPath);
 
@@ -25,15 +23,17 @@ module.exports = function (RED) {
 
     // Registration of the node into Node-RED
     RED.nodes.registerType("axonizeSendAzureEventHubMessages", AxonizeAzureContribEventHub, {
+        category: 'cloud',
         defaults: {
             name: {
-                value: "Clovity - Send - Azure Event Hub"
+                value: "Clovity - Send - Azure Event Hub",
+                required: true
             },
-            connectionString: {
-                type: "text"
+            connectionString: {                
+                required: true
             },
-            eventHubPath: {
-                type: "text"
+            eventHubPath: {                
+                required: true
             }
         }        
     });
