@@ -1,6 +1,6 @@
 {
   "name": "axonize-node-red-contrib-azure-event-hub-send-message",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Send messages to the azure event hub",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git+https://github.com/adibenmati/node-red-contrib-azure-event-hub-send-message.git"
   },
-  "author": "Clovity Inc",
+  "author": "Axonize",
   "bugs": {
     "url": "https://github.com/adibenmati/node-red-contrib-azure-event-hub-send-message/issues"
   },
