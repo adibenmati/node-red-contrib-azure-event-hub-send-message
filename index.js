@@ -14,7 +14,7 @@ module.exports = function (RED) {
             if(typeof msg.payload != "object" && typeof msg.payload != "string"){
                 node.error("EventHubMessage - payload object is not valid");
             }          
-            sendMessageToEventHub(node, this.config.connectionString, this.config.eventHubPath, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);            
+            sendMessageToEventHub(node, this.config.connectionString, this.config.eventHubPath, this.config.deviceId, typeof(msg.payload) == 'string' ? JSON.parse(msg.payload): msg.payload);            
             node.send(msg);
         });
     }
@@ -32,16 +32,24 @@ module.exports = function (RED) {
             },
             eventHubPath: {                   
                 required: true
-            }
+            },
+            deviceId: {                   
+                required: false
+            },
         }        
     });
 
-    var sendMessageToEventHub = function (node, connectionString, eventHubPath, message) { 
+    var sendMessageToEventHub = function (node, connectionString, eventHubPath, deviceId, message) { 
         try{
             const client = EventHubClient.createFromConnectionString(connectionString, eventHubPath);
-            const eventData = {
+            let eventData = {
                 body: message
             };
+            if(deviceId != null){
+                eventData.applicationProperties = {deviceId: deviceId};                
+                eventData.partitionKey = deviceId;                
+            }            
+            
             client.send(eventData);
             node.log("sent message to eventhub successfully");
         }   

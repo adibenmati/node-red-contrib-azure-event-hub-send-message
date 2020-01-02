@@ -1,6 +1,6 @@
 {
   "name": "axonize-node-red-contrib-azure-event-hub-send-message",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Send messages to the azure event hub",
   "main": "index.js",
   "scripts": {
